@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<head>
+    <title>
+        Cipher
+    </title>
+</head>
+<link href="styles.css" rel="stylesheet" type="text/css">
+
+<script src="crypto.js"></script>
+<script>
+    function Encrypt(){
+    var msg = document.getElementById('msg').value;
+    var key = document.getElementById('Key').value;
+    if(msg.length == 0 ){
+        document.getElementById('warn').style.display = "block";
+    }
+    else if(key.length == 0){
+        
+    var encryptedAES = CryptoJS.AES.encrypt(msg, "Alphas");
+    document.getElementById('warn').style.display = "none";
+    document.getElementById('Result').innerHTML = encryptedAES;
+    document.getElementById('Result').style.display = "block";
+    document.getElementById('clear').style.display = "block";
+    }
+    else{
+        var encryptedAES = CryptoJS.AES.encrypt(msg, key);
+    document.getElementById('warn').style.display = "none";
+    document.getElementById('Result').innerHTML = encryptedAES;
+    document.getElementById('Result').style.display = "block";
+    document.getElementById('clear').style.display = "block";
+    }
+    }
+
+    function Decrypt(){
+        var msg = document.getElementById('msg').value;
+        var key = document.getElementById('Key').value;
+        if(msg.length == 0 ){
+            document.getElementById('warn').style.display = "block";
+    }
+
+    else if(key.length == 0){
+        
+        document.getElementById('warn').style.display = "none";
+    var decryptedBytes = CryptoJS.AES.decrypt(msg, "Alphas");
+    var plaintext = decryptedBytes.toString(CryptoJS.enc.Utf8);
+    document.getElementById('Result').innerHTML = plaintext;
+    document.getElementById('Result').style.display = "block";
+    document.getElementById('clear').style.display = "block";
+        }
+
+    else{
+        document.getElementById('warn').style.display = "none";
+    var decryptedBytes = CryptoJS.AES.decrypt(msg, key);
+    var plaintext = decryptedBytes.toString(CryptoJS.enc.Utf8);
+    document.getElementById('Result').innerHTML = plaintext;
+    document.getElementById('Result').style.display = "block";
+    document.getElementById('clear').style.display = "block";
+    }
+    }
+
+    function Copy() {
+  var copyText = document.getElementById('Result');
+  copyText.select();
+  document.execCommand("copy");
+} 
+
+function Clean() {
+    
+    document.getElementById('Result').innerHTML = "";
+    document.getElementById('msg').value = "";
+    document.getElementById('Key').value = "";
+    
+    document.getElementById('Result').style.display = "none";
+    document.getElementById('clear').style.display = "none";
+    document.getElementById('warn').style.display = "none";
+} 
+
+</script>
+<body style="background-color: rgba(0,0,0,0.8);color:white">
+<br>
+    <center><h1 style="font-family: vardna; font-weight: bold">TM & T(K)Soft </h1></center>
+    <div style="margin: 20px; padding: 50px">
+    <center style="background-color: rgba(255,255,255,0.1); padding: 20px;margin-left: 25%; margin-right: 25%">
+    <h2 class="badge-info badge bg-primary">EnCryption / DeCryption</h2><br>
+    <textarea id="msg" class="form-control"></textarea><br>
+    <h2 class="badge-info badge bg-primary">Key</h2><br>
+    <input class="form-control" type="text" id="Key"><br><br><br>
+    <button  class="btn btn-danger btn-lg" onclick="Encrypt();">Encrypt</button> &nbsp; &nbsp;
+    <button class="btn btn-success btn-lg" onclick="Decrypt();">Decrypt</button><br><br>
+    <button class="btn btn-primary btn" id="clear"  style="display:none" onclick="Clean();">Clear All</button><br><br>
+    
+    <h2 class="badge-info badge bg-dark" id="warn" style="display:none">Please Fill the Required Fields</h2><br>
+    </center>
+    <br>
+    <textArea onclick="Copy()" class="form-control" style="background-color: rgba(0,0,0,0.5); color:white; display:none; height: 250px" id="Result">Result</h1>
+    <br><br>
+    
+</div>
+</body>
